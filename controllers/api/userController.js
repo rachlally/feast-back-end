@@ -7,7 +7,9 @@ const { User, ShoppingList, Kitchen, DonationList } = require('../../models');
 //get all users
 router.get("/", async (req, res) => {
     try {
-        const users = await User.findAll();
+        const users = await User.findAll({
+            include: [ShoppingList]
+        });
         res.status(200).json(users)
     } catch (err) {
         console.log(err);

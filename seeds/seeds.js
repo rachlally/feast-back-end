@@ -85,19 +85,23 @@ const productData = [
 
 const donationListData = [
   {
-    name: "Jack's Donation",
+    name: "Jack's donation list",
     UserId: 1,
   },
 ];
 
 const shoppingListData = [
   {
-    name: "Jack's Shopping",
+    name: "Jack's list",
     UserId: 1,
   },
   {
-    name: "Jack's Shopping",
-    UserId: 1,
+    name: "Bug's list",
+    UserId: 2,
+  },
+  {
+    name: "Harry's list",
+    UserId: 3,
   },
 ];
 
