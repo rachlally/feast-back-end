@@ -5,6 +5,6 @@ const shoppingRoutes = require('./shoppingController');
 
 router.use('/users', userRoutes);
 router.use('/kitchens', kitchenRoutes);
-router.use('/shopping', shoppingRoutes);
+// router.use('/shopping', shoppingRoutes);
 
 module.exports = router;
