@@ -17,7 +17,9 @@ router.get('/', async (req, res) => {
 //get storage type by id
 router.get('/:id', async (req, res) => {
     try {
-      const storageData = await Storage.findByPk(req.params.id);
+      const storageData = await Storage.findByPk(req.params.id,{
+        include: [Kitchen, Product]
+      });
       if (!storageData) {
       res.status(404).json({ message: 'No Storage Location found with that ID!' });
       return;
