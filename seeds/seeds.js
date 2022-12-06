@@ -14,11 +14,11 @@ const userData = [
     email: "jack@sparrow.com",
     password: "Iamthecaptain",
   },
-  //   {
-  //     name: "Bugs Bunny",
-  //     email: "bug@bunny.com",
-  //     password: "thisaintalbaquerque"
-  //   },
+    {
+      name: "Bugs Bunny",
+      email: "bug@bunny.com",
+      password: "thisaintalbaquerque"
+    },
   //   {
   //     name: "Harry Potter",
   //     email: "yourawizard@harry.com",
@@ -94,6 +94,10 @@ const shoppingListData = [
   {
     name: "Ben and Jerry's Phish Food",
     UserId: 1,
+  },
+  {
+    name: "Pickles",
+    UserId: 2,
   },
   {
     name: "Pickles",
