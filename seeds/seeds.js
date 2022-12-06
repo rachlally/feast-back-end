@@ -14,30 +14,30 @@ const userData = [
     email: "jack@sparrow.com",
     password: "Iamthecaptain",
   },
-  //   {
-  //     name: "Bugs Bunny",
-  //     email: "bug@bunny.com",
-  //     password: "thisaintalbaquerque"
-  //   },
-  //   {
-  //     name: "Harry Potter",
-  //     email: "yourawizard@harry.com",
-  //     password: "voldemort"
-  //   },
+    {
+      name: "Bugs Bunny",
+      email: "bug@bunny.com",
+      password: "thisaintalbaquerque"
+    },
+    {
+      name: "Harry Potter",
+      email: "yourawizard@harry.com",
+      password: "voldemort"
+    },
 ];
 const kitchenData = [
   {
     zipCode: 98027,
     UserId: 1,
   },
-  // {
-  //     zipCode: 98223,
-  //     UserId: 2
-  // },
-  // {
-  //     zipCode: 98672,
-  //     UserId: 1
-  // },
+  {
+      zipCode: 98223,
+      UserId: 2
+  },
+  {
+      zipCode: 98672,
+      UserId: 1
+  },
 ];
 const storageData = [
   {
@@ -85,18 +85,18 @@ const productData = [
 
 const donationListData = [
   {
-    name: "Marinara Sauce",
+    name: "Jack's Donation",
     UserId: 1,
   },
 ];
 
 const shoppingListData = [
   {
-    name: "Ben and Jerry's Phish Food",
+    name: "Jack's Shopping",
     UserId: 1,
   },
   {
-    name: "Pickles",
+    name: "Jack's Shopping",
     UserId: 1,
   },
 ];

@@ -7,7 +7,9 @@ const {User, Storage, ShoppingList, Product, Kitchen, DonationList} = require('.
 //get all storage types
 router.get('/', async (req, res) => {
     try {
-      const storageData = await Storage.findAll();
+      const storageData = await Storage.findAll({
+        include: [Kitchen, Product]
+      });
       res.status(200).json(storageData);
     } catch (err) {
       res.status(500).json(err);
