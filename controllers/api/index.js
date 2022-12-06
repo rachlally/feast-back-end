@@ -1,7 +1,6 @@
 const router = require('express').Router();
+const userRoutes = require('./userController');
 
-const userRoutes = require('./kitchenController');
-
-router.use('/kitchens', userRoutes);
+router.use('/users', userRoutes);
 
 module.exports = router;
