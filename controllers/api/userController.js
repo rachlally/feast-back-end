@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { User, ShoppingList, Kitchen, DonationList } = require('../../models');
+const { User, ShoppingList, DonationList, Kitchen } = require('../../models');
 
 //get all users
 router.get("/", async (req, res) => {
     try {
         const users = await User.findAll({
-            include: [ShoppingList]
+            include: [ShoppingList, DonationList, Kitchen]
         });
         res.status(200).json(users)
     } catch (err) {
@@ -108,6 +108,7 @@ router.post('/login', (req, res) => {
         }
     })
 })
+
 
 
 module.exports = router;
