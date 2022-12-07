@@ -32,9 +32,7 @@ router.get('/:id', async (req,res)=> {
 //create donation item
 router.post('/', async (req, res) => {
     try {
-      const donationList = await DonationList.create({
-          name: req.body.name,
-      });
+      const donationList = await DonationList.create(req.body);
       res.status(200).json(donationList);
     } catch (err) {
       res.status(400).json(err);
@@ -43,35 +41,24 @@ router.post('/', async (req, res) => {
 
 //put donation item
 router.put('/:id', async (req, res) => {
-    try {
-        const donationList = await DonationList.update({
-            name: req.body.name
-        },{
-            where: {
-            id: req.params.id,
-        }
-        });
-        res.status(200).json(donationList)
+    try{
+      const donationList = await DonationList.update(req.body,{where:{id:req.params.id}});
+      res.status(200).json(donationList)
     } catch (err) {
-        res.status(400).json(err);
+      console.log(err)
+      res.status(400).json(err);
     }
-});
+  });
 
 //delete donation item
-router.delete('/:id', async (req,res) => {
-    try {
-        const deleteDonation = await DonationList.findByPk(req.params.id);
-        DonationList.destroy({
-            where: {
-                id: req.params.id
-            }
-        })
-        res.status(200).json(deleteDonation)
-    } catch(err) {
-        console.log(err);
-        res.json({ msg: 'an error occurred' })
+router.delete('/:id', async(req, res) => {
+    // delete a category by its `id` value
+    try{
+      const donationList = await DonationList.destroy({where:{id:req.params.id}});
+      res.status(200).json(donationList)
+    } catch (err) {
+      console.log(err)
     }
-})
-
+  });
 
 module.exports = router;
