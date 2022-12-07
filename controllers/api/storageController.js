@@ -37,10 +37,13 @@ router.post('/', async (req, res) => {
   try {
     const storageData = await Storage.create({
         storageType: req.body.storageType,
+        KitchenId: req.body.KitchenId
     });
     res.status(200).json(storageData);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({
+      msg: "The storage type you are creating does not have a valid kitchen ID associated with it",
+    });
   }
 });
 
@@ -56,7 +59,7 @@ router.put('/:id', async (req, res) => {
         });
         res.status(200).json(storageData)
     } catch (err) {
-        res.status(400).json(err);
+        res.status(400).json({msg: "A storage type with that ID does not exist", err});
     }
 });
 
@@ -69,7 +72,7 @@ router.delete('/:id', async (req, res) => {
         });
         res.status(200).json(storageData)
     } catch (err) {
-        res.status(400).json(err);
+        res.status(400).json({ msg: "There is no storage type with that ID" });
     }
   });
   

@@ -23,10 +23,14 @@ router.get('/:id', async (req, res) => {
         const shoppingList = await ShoppingList.findByPk(req.params.id, {
             include:[User, Product]
         })
+        if (!shoppingList) {
+          res.status(404).json({ message: "No shopping list found with that ID!" });
+          return;
+        }
         res.status(200).json(shoppingList)
     } catch (err) {
         console.log(err)
-        res.status(400).json(err)
+        res.status(400).json({msg: "No shopping list exists at that ID"})
     }
 })
 
@@ -37,7 +41,9 @@ router.post('/', async (req, res) => {
       res.status(200).json(shoppingList)
     } catch (err) {
       console.log(err)
-      res.status(400).json(err);
+      res.status(400).json({
+        msg: "Check that the shopping list you are adding has either a valid user id",
+      });
     }
   });
 
@@ -48,7 +54,9 @@ router.post('/', async (req, res) => {
       res.status(200).json(shoppingList)
     } catch (err) {
       console.log(err)
-      res.status(400).json(err);
+      res.status(400).json({
+        msg: "Check that the shopping list you are editing has either a valid user id",
+      });
     }
   });
 
@@ -59,7 +67,7 @@ router.post('/', async (req, res) => {
       const shoppingList = await ShoppingList.destroy({where:{id:req.params.id}});
       res.status(200).json(shoppingList)
     } catch (err) {
-      console.log(err)
+      console.log({ msg: "There is no shopping list with that ID" })
     }
   });
 
