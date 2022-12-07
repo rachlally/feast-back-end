@@ -1,12 +1,12 @@
 const router = require("express").Router();
 
-const { Kitchen, User } = require("../../models");
+const { Kitchen, User, Storage } = require("../../models");
 
 //get all kitchens
 router.get("/", async (req, res) => {
   try {
     const kitchen = await Kitchen.findAll({
-      include: [User],
+      include: [User, Storage],
     });
     res.status(200).json(kitchen);
   } catch (err) {
@@ -18,13 +18,16 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const kitchen = await Kitchen.findByPk(req.params.id, {
-      include: [User],
+      include: [User, Storage],
     });
-
+    if (!kitchen) {
+      res.status(404).json({ message: "No kitchen found with that ID!" });
+      return;
+    }
     res.status(200).json(kitchen);
   } catch (err) {
     console.log(err);
-    res.status(400).json(err);
+    res.status(500).json(err);
   }
 });
 
@@ -36,7 +39,11 @@ router.post("/", async (req, res) => {
     res.status(200).json(kitchen);
   } catch (err) {
     console.log(err);
-    res.status(400).json(err);
+    res
+      .status(400)
+      .json({
+        msg: "The kitchen you are creating does not have a valid user ID associated with it",
+      });
   }
 });
 
@@ -50,7 +57,11 @@ router.put("/:id", async (req, res) => {
     res.status(200).json(kitchen);
   } catch (err) {
     console.log(err);
-    res.status(400).json(err);
+    res
+      .status(400)
+      .json({
+        msg: "The kitchen you are creating does not have a valid user ID associated with it",
+      });
   }
 });
 
@@ -62,6 +73,7 @@ router.delete("/:id", async (req, res) => {
     res.status(200).json(kitchen);
   } catch (err) {
     console.log(err);
+    res.status(400).json({ msg: "There is no kitchen with that ID" });
   }
 });
 
