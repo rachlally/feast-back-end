@@ -39,7 +39,10 @@ router.post('/', async (req, res) => {
             name: req.body.name,
             isPerishable: req.body.isPerishable,
             datePurchased: req.body.datePurchased,
-            expirationDate: req.body.expirationDate
+            expirationDate: req.body.expirationDate,
+            ShoppingListId: req.body.ShoppingListId,
+            DonationListId: req.body.DonationListId,
+            UserId: req.body.UserId
         });
         res.status(201).json(newProduct)
     } catch(err) {

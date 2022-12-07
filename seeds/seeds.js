@@ -30,14 +30,14 @@ const kitchenData = [
     zipCode: 98027,
     UserId: 1,
   },
-  // {
-  //     zipCode: 98223,
-  //     UserId: 2
-  // },
-  // {
-  //     zipCode: 98672,
-  //     UserId: 1
-  // },
+  {
+      zipCode: 98223,
+      UserId: 2
+  },
+  {
+      zipCode: 98672,
+      UserId: 1
+  },
 ];
 const storageData = [
   {

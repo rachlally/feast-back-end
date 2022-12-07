@@ -8,7 +8,7 @@ const productRoutes = require('./productController');
 router.use('/users', userRoutes);
 router.use('/kitchens', kitchenRoutes);
 router.use('/storages', storageRoutes);
-// router.use('/shopping', shoppingRoutes);
+router.use('/shopping', shoppingRoutes);
 router.use('/products', productRoutes);
 
 module.exports = router;
