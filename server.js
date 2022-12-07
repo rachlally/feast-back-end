@@ -6,7 +6,7 @@ const cors = require("cors")
 
 // const cwd = process.cwd();
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors());
 
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log('Now listening on localhost:3001'));
+    app.listen(PORT, () => console.log(`Now listening on localhost:${PORT}`));
   });
 
   
