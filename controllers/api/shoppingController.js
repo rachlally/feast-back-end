@@ -17,6 +17,39 @@ router.get('/', (req,res)=>{
     })
 })
 
+// get shopping list by user id
+router.get('/user/:UserId', (req,res)=>{
+    ShoppingList.findAll({
+        where: {
+          '$UserId$': req.params.UserId
+        },
+        include:[{
+          model: User,
+        attributes: [
+          'id',
+          'name'
+        ]}, {
+          model: Product,
+          attributes: [
+            'id',
+            'name',
+            'isPerishable',
+            'datePurchased',
+            'expirationDate',
+            'StorageId',
+            'ShoppingListId',
+            'DonationListId'
+          ]
+        }
+      ]
+    }).then(shoppingData=>{
+        res.json(shoppingData)
+    }).catch(err=>{
+        console.log(err);
+        res.json({msg:"an error occured",err})
+    })
+})
+
 //get one
 router.get('/:id', async (req, res) => {
     try{

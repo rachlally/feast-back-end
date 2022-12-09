@@ -14,6 +14,34 @@ router.get("/", async (req, res) => {
     res.status(400).json(err);
   }
 });
+
+// get all kitchens by userID
+router.get("/user/:UserId", async (req, res) => {
+  try {
+    const kitchen = await Kitchen.findAll({
+      where: {
+        '$UserId$': req.params.UserId
+      },
+      include: [{
+        model: User,
+        attributes: [
+          'name'
+        ]
+      }, {
+        model: Storage,
+      attributes: [
+        'id',
+        'storageType',
+      ]
+    }],
+    });
+    res.status(200).json(kitchen);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
+
 //get one kitchen
 router.get("/:id", async (req, res) => {
   try {

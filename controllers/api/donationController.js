@@ -16,6 +16,39 @@ router.get('/', (req,res)=>{
     })
 })
 
+//get donation list by userId
+router.get('/user/:UserId', (req,res)=>{
+    DonationList.findAll({
+      where: {
+        '$UserId$': req.params.UserId
+      },
+      include:[{
+        model: User,
+        attributes: [
+          'id',
+          'name'
+        ]
+      }, {
+        model: Product,
+        attributes: [
+          'id',
+          'name',
+          'isPerishable',
+          'datePurchased',
+          'expirationDate',
+          'StorageId',
+          'ShoppingListId',
+          'DonationListId'
+        ]
+      }]
+    }).then(donationData=>{
+        res.json(donationData)
+    }).catch(err=>{
+        console.log(err);
+        res.json({msg:"an error occured",err})
+    })
+})
+
 //donation by id
 router.get('/:id', async (req,res)=> {
     try {
