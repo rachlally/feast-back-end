@@ -16,6 +16,37 @@ router.get('/', async (req, res) => {
     }
   });
 
+// Get all storages filtered by userId
+router.get('/user/:UserId', async (req, res) => {
+    try {
+      const storageData = await Storage.findAll({
+        where: {
+          '$Kitchen.UserId$': req.params.UserId
+        },
+        include: [{
+          model: Kitchen,
+          attributes:[
+            'UserId'
+          ]
+        }, {
+          model: Product,
+          attributes:[
+            'id',
+            'name',
+            'isPerishable',
+            'datePurchased',
+            'expirationDate',
+            'ShoppingListId',
+            'DonationListId'
+          ]
+        }]
+      });
+      res.status(200).json(storageData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
 //get storage type by id
 router.get('/:id', async (req, res) => {
     try {
@@ -63,6 +94,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// delete a storage by id
 router.delete('/:id', async (req, res) => {
     try {
         const storageData = await Storage.destroy({
