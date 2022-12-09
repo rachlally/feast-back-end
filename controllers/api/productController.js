@@ -26,6 +26,43 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET all Products by KitchenId
+router.get("/kitchen/:KitchenId", async (req, res) => {
+  try {
+    const products = await Product.findAll({
+      where: {
+        '$KitchenId$': req.params.KitchenId
+      },
+      include: [{
+        model: Storage,
+        attributes: [
+          'KitchenId',
+          'storageType'
+        ]
+      }, { 
+        model: ShoppingList,
+        attributes: [
+          'name',
+          'UserId'
+        ]
+      }, {
+        model: DonationList,
+      attributes: [
+        'name',
+        'UserId'
+      ]
+    }],
+    });
+    res.status(200).json(products);
+  } catch (err) {
+    console.log(err);
+    res.json({
+      msg: "an error occurred",
+      err,
+    });
+  }
+});
+
 // GET a single product based on the id you pass in
 router.get("/:id", async (req, res) => {
   try {
