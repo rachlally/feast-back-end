@@ -6,6 +6,10 @@ class Kitchen extends Model {}
 
 Kitchen.init(
   {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     zipCode: {
       type: DataTypes.INTEGER,
       allowNull: false,

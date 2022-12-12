@@ -79,7 +79,9 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const kitchen = await Kitchen.update(req.body, {
-      where: { id: req.params.id },
+      where: { 
+        id: req.params.id,
+       },
       include: [User],
     });
     res.status(200).json(kitchen);
