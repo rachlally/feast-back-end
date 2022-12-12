@@ -27,14 +27,17 @@ const userData = [
 ];
 const kitchenData = [
   {
+    name: "jack's first kitchen",
     zipCode: 98027,
     UserId: 1,
   },
   {
+      name: "first kitchen",
       zipCode: 98223,
       UserId: 2
   },
   {
+      name: "jack's second kitchen",
       zipCode: 98672,
       UserId: 1
   },
