@@ -6,13 +6,10 @@ class Product extends Model {}
 
 Product.init(
   {
-
-
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-
     isPerishable: {
       type: DataTypes.BOOLEAN,
       allowNull:true
