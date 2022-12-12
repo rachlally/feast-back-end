@@ -15,11 +15,11 @@ Product.init(
 
     isPerishable: {
       type: DataTypes.BOOLEAN,
-      allowNull:false
+      allowNull:true
     },
     datePurchased: {
       type: DataTypes.DATEONLY,
-      allowNull:false,
+      allowNull:true,
       validate: {isDate:true}
     },
     expirationDate: {
