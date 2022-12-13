@@ -63,6 +63,24 @@ router.get("/kitchen/:KitchenId", async (req, res) => {
   }
 });
 
+// Get all products by StorageId
+router.get("/storage/:StorageId", async (req,res) => {
+  try {
+    const products = await Product.findAll({
+      where: {
+        '$StorageId$': req.params.StorageId
+      },
+    });
+    res.status(200).json(products);
+  } catch (err) {
+    console.log(err);
+    res.json({
+      msg: "an error occurred",
+      err,
+    });
+  }
+});
+
 // GET a single product based on the id you pass in
 router.get("/:id", async (req, res) => {
   try {
