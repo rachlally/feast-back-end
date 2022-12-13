@@ -63,6 +63,25 @@ router.get('/:id', async (req, res) => {
     }
   });
 
+// get storage by kitchen id
+router.get('/kitchens/:id', async (req,res) => {
+  try {
+    const storageData = await Storage.findAll({
+      where: {
+        '$Storage.KitchenId$': req.params.id
+      },
+      include: [Product]
+    });
+    if (!storageData) {
+      res.status(404).json({ message: "No storages found with that kitchen id" });
+      return;
+    }
+    res.status(200).json(storageData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //create storage type
 router.post('/', async (req, res) => {
   try {
