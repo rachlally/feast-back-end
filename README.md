@@ -39,7 +39,7 @@ View the deployed WasteNot application at: https://wastenotkitchentracker.netlif
 
 ## Screenshot
 
-![Deployed API](deployedAPI.png)
+![Deployed API](DeployedAPI.png)
 
 ## Credits
 
