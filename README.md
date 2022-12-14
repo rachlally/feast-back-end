@@ -21,7 +21,9 @@ While creating the database and routes, the developers learned how to use MySQL 
 
 ## Installation
 
-To install, fork or clone the repository from https://github.com/rachlally/feast-back-end.  Run `npm install` for package installation.  Sign into Mysql and run `source db/schema.sql/;`.  Then, seed the table at `npm run seed`.  Finally, run `node server.js` to view on the local host or Insomnia.  
+To install, fork or clone the repository from https://github.com/rachlally/feast-back-end.  Run `npm install` for package installation.  Sign into Mysql and run `source db/schema.sql/;`.  Then, seed the table at `npm run seed`.  Finally, run `node server.js` to view on the local host or Insomnia.
+
+Link to the front-end repo at https://github.com/rachlally/feast-front-end.
 
 ## Technology 
 
@@ -32,6 +34,8 @@ This application is backed by a MySql database with a Sequelize ORM.  JSON Web T
 View the API at the deployed link: https://wastenot.herokuapp.com/.
 
 API routes can be found in repository in the Controllers folder.
+
+View the deployed WasteNot application at: https://wastenotkitchentracker.netlify.app/ .
 
 ## Screenshot
 
