@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 router.get('/', (req,res)=>{
     ShoppingList.findAll({
-        include:[User, Product]
+        include:[Kitchen, Product]
     }).then(shoppingData=>{
         res.json(shoppingData)
     }).catch(err=>{
@@ -18,16 +18,17 @@ router.get('/', (req,res)=>{
 })
 
 // get shopping list by user id
-router.get('/user/:UserId', (req,res)=>{
+router.get('/kitchen/:KitchenId', (req,res)=>{
     ShoppingList.findAll({
         where: {
-          '$UserId$': req.params.UserId
+          '$KitchenId$': req.params.KitchenId
         },
         include:[{
-          model: User,
+          model: Kitchen,
         attributes: [
           'id',
-          'name'
+          'name',
+          'zipCode'
         ]}, {
           model: Product,
           attributes: [
@@ -54,7 +55,7 @@ router.get('/user/:UserId', (req,res)=>{
 router.get('/:id', async (req, res) => {
     try{
         const shoppingList = await ShoppingList.findByPk(req.params.id, {
-            include:[User, Product]
+            include:[Kitchen, Product]
         })
         if (!shoppingList) {
           res.status(404).json({ message: "No shopping list found with that ID!" });
@@ -70,7 +71,10 @@ router.get('/:id', async (req, res) => {
 //Create shopping list
 router.post('/', async (req, res) => {
     try{
-      const shoppingList = await ShoppingList.create(req.body);
+      const shoppingList = await ShoppingList.create({
+        name:req.body.name,
+        KitchenId: req.body.KitchenId
+      });
       res.status(200).json(shoppingList)
     } catch (err) {
       console.log(err)

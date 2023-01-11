@@ -89,22 +89,22 @@ const productData = [
 const donationListData = [
   {
     name: "Jack's donation list",
-    UserId: 1,
+    KitchenId: 1,
   },
 ];
 
 const shoppingListData = [
   {
     name: "Jack's list",
-    UserId: 1,
+    KitchenId: 1,
   },
   {
     name: "Bug's list",
-    UserId: 2,
+    KitchenId: 2,
   },
   {
     name: "Harry's list",
-    UserId: 3,
+    KitchenId: 3,
   },
 ];
 
@@ -115,9 +115,9 @@ const seedDatabase = async () => {
     individualHooks: true,
     returning: true,
   });
-  const shoppingLists = await ShoppingList.bulkCreate(shoppingListData);
   const kitchens = await Kitchen.bulkCreate(kitchenData);
   const storage = await Storage.bulkCreate(storageData);
+  const shoppingLists = await ShoppingList.bulkCreate(shoppingListData);
   const donationLists = await DonationList.bulkCreate(donationListData);
   const products = await Product.bulkCreate(productData);
 };

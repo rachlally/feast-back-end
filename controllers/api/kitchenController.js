@@ -1,12 +1,18 @@
 const router = require("express").Router();
 
-const { Kitchen, User, Storage } = require("../../models");
+const {
+  Kitchen,
+  User,
+  Storage,
+  DonationList,
+  ShoppingList,
+} = require("../../models");
 
 //get all kitchens
 router.get("/", async (req, res) => {
   try {
     const kitchen = await Kitchen.findAll({
-      include: [User, Storage],
+      include: [User, Storage, DonationList, ShoppingList],
     });
     res.status(200).json(kitchen);
   } catch (err) {
@@ -20,20 +26,26 @@ router.get("/user/:UserId", async (req, res) => {
   try {
     const kitchen = await Kitchen.findAll({
       where: {
-        '$UserId$': req.params.UserId
+        $UserId$: req.params.UserId,
       },
-      include: [{
-        model: User,
-        attributes: [
-          'name'
-        ]
-      }, {
-        model: Storage,
-      attributes: [
-        'id',
-        'storageType',
-      ]
-    }],
+      include: [
+        {
+          model: User,
+          attributes: ["name"],
+        },
+        {
+          model: Storage,
+          attributes: ["id", "storageType"],
+        },
+        {
+          model: ShoppingList,
+          attributes: ["id", "name"],
+        },
+        {
+          model: DonationList,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     res.status(200).json(kitchen);
   } catch (err) {
@@ -46,7 +58,7 @@ router.get("/user/:UserId", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const kitchen = await Kitchen.findByPk(req.params.id, {
-      include: [User, Storage],
+      include: [User, Storage, ShoppingList, DonationList],
     });
     if (!kitchen) {
       res.status(404).json({ message: "No kitchen found with that ID!" });
@@ -64,34 +76,72 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const kitchen = await Kitchen.create(req.body);
-    res.status(200).json(kitchen);
+    const newShoppingList = await ShoppingList.create({
+      name:
+        kitchen.name[kitchen.name.length - 1] === "s"
+          ? `${kitchen.name}' Shopping List`
+          : `${kitchen.name}'s Shopping List`,
+      KitchenId: kitchen.id,
+    });
+
+    const newDonationList = await DonationList.create({
+      name:
+        kitchen.name[kitchen.name.length - 1] === "s"
+          ? `${kitchen.name}' Donation List`
+          : `${kitchen.name}'s Donation List`,
+      KitchenId: kitchen.id,
+    });
+    res.status(200).json({
+      kitchen: kitchen,
+      shoppingList: newShoppingList,
+      donationList: newDonationList,
+    });
   } catch (err) {
     console.log(err);
-    res
-      .status(400)
-      .json({
-        msg: "The kitchen you are creating does not have a valid user ID associated with it",
-      });
+    res.status(400).json({
+      msg: "The kitchen you are creating does not have a valid user ID associated with it",
+    });
   }
 });
 
 //update a kitchen
 router.put("/:id", async (req, res) => {
   try {
-    const kitchen = await Kitchen.update(req.body, {
-      where: { 
+    const kitchen = await Kitchen.update({
+      name:req.body.name,
+      zipCode:req.body.zipCode
+    },{
+      where: {
         id: req.params.id,
-       },
-      include: [User],
+      },
+      include: [User, ShoppingList, DonationList],
     });
-    res.status(200).json(kitchen);
+    console.log(JSON.stringify(kitchen))
+    const newShoppingList = await ShoppingList.update({
+      name:
+        kitchen.name[kitchen.name.length - 1] === "s"
+          ? `${kitchen.name}' Shopping List`
+          : `${kitchen.name}'s Shopping List`,
+      KitchenId: kitchen.id,
+    });
+
+    const newDonationList = await DonationList.update({
+      name:
+        kitchen.name[kitchen.name.length - 1] === "s"
+          ? `${kitchen.name}' Donation List`
+          : `${kitchen.name}'s Donation List`,
+      KitchenId: kitchen.id,
+    });
+    res.status(200).json({
+      kitchen: kitchen,
+      shoppingList: newShoppingList,
+      donationList: newDonationList,
+    });
   } catch (err) {
     console.log(err);
-    res
-      .status(400)
-      .json({
-        msg: "The kitchen you are creating does not have a valid user ID associated with it",
-      });
+    res.status(400).json({
+      msg: "The kitchen you are creating does not have a valid user ID associated with it",
+    });
   }
 });
 
