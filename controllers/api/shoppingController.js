@@ -71,7 +71,10 @@ router.get('/:id', async (req, res) => {
 //Create shopping list
 router.post('/', async (req, res) => {
     try{
-      const shoppingList = await ShoppingList.create(req.body);
+      const shoppingList = await ShoppingList.create({
+        name:req.body.name,
+        KitchenId: req.body.KitchenId
+      });
       res.status(200).json(shoppingList)
     } catch (err) {
       console.log(err)

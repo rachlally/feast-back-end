@@ -70,7 +70,10 @@ router.get('/:id', async (req,res)=> {
 //create donation item
 router.post('/', async (req, res) => {
     try {
-      const donationList = await DonationList.create(req.body);
+      const donationList = await DonationList.create({
+        name:req.body.name,
+        KitchenId: req.body.KitchenId
+      });
       res.status(200).json(donationList);
     } catch (err) {
       res.status(400).json({
