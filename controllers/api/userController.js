@@ -2,13 +2,13 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User, ShoppingList, DonationList, Kitchen } = require("../../models");
+const { User, Kitchen } = require("../../models");
 
 //get all users
 router.get("/", async (req, res) => {
   try {
     const users = await User.findAll({
-      include: [ShoppingList, DonationList, Kitchen],
+      include: [Kitchen],
     });
     res.status(200).json(users);
   } catch (err) {
@@ -34,26 +34,9 @@ router.post("/", async (req, res) => {
       );
       console.log("-------------------")
       console.log(newUser)
-      const newShoppingList = await ShoppingList.create({
-        name:
-        newUser.name[newUser.name.length - 1] === "s"
-        ? `${newUser.name}' Shopping List`
-        : `${newUser.name}'s Shopping List`,
-        UserId: newUser.id,
-      });
-      
-      const newDonationList = await DonationList.create({
-        name:
-        newUser.name[newUser.name.length - 1] === "s"
-        ? `${newUser.name}' Donation List`
-        : `${newUser.name}'s Donation List`,
-        UserId: newUser.id,
-      });
       res.status(200).json({
         token,
-        user: newUser,
-        shoppingList: newShoppingList,
-        donationList: newDonationList,
+        user: newUser
       });
     } catch (err) {
       console.log(err);
@@ -76,7 +59,7 @@ router.get("/getuserfromtoken", (req, res) => {
 
 router.get("/:id", (req, res) => {
   User.findByPk(req.params.id, {
-    include: [ShoppingList, Kitchen, DonationList],
+    include: [Kitchen],
   })
     .then((userData) => {
       if (!userData) {

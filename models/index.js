@@ -5,14 +5,15 @@ const Product = require('./Product');
 const DonationList = require('./DonationList');
 const ShoppingList = require('./ShoppingList');
 
-User.hasOne(DonationList);
-DonationList.belongsTo(User);
-
-User.hasOne(ShoppingList);
-ShoppingList.belongsTo(User);
 
 User.hasMany(Kitchen);
 Kitchen.belongsTo(User);
+
+Kitchen.hasOne(DonationList);
+DonationList.belongsTo(Kitchen);
+
+Kitchen.hasOne(ShoppingList);
+ShoppingList.belongsTo(Kitchen);
 
 Kitchen.hasMany(Storage);
 Storage.belongsTo(Kitchen);

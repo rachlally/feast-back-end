@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 //get donation list
 router.get('/', (req,res)=>{
     DonationList.findAll({
-        include:[User, Product]
+        include:[Kitchen, Product]
     }).then(donationData=>{
         res.json(donationData)
     }).catch(err=>{
@@ -16,17 +16,18 @@ router.get('/', (req,res)=>{
     })
 })
 
-//get donation list by userId
-router.get('/user/:UserId', (req,res)=>{
+//get donation list by kitchenId
+router.get('/kitchen/:KitchenId', (req,res)=>{
     DonationList.findAll({
       where: {
-        '$UserId$': req.params.UserId
+        '$KitchenId$': req.params.KitchenId
       },
       include:[{
-        model: User,
+        model: Kitchen,
         attributes: [
           'id',
-          'name'
+          'name',
+          'zipCode'
         ]
       }, {
         model: Product,
@@ -53,7 +54,7 @@ router.get('/user/:UserId', (req,res)=>{
 router.get('/:id', async (req,res)=> {
     try {
         const donation = await DonationList.findByPk(req.params.id, {
-            include: [User, Product]
+            include: [Kitchen, Product]
         });
         if (!donation) {
           res.status(404).json({ message: "No donation list found with that ID!" });
@@ -69,7 +70,10 @@ router.get('/:id', async (req,res)=> {
 //create donation item
 router.post('/', async (req, res) => {
     try {
-      const donationList = await DonationList.create(req.body);
+      const donationList = await DonationList.create({
+        name:req.body.name,
+        KitchenId: req.body.KitchenId
+      });
       res.status(200).json(donationList);
     } catch (err) {
       res.status(400).json({
