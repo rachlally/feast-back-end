@@ -11,7 +11,7 @@ Kitchen.init(
       allowNull: false,
     },
     zipCode: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },
