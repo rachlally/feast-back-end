@@ -22,4 +22,5 @@ router.get("/", async (req, res) => {
     // console.log(response)
     res.json(response.data) 
   }); 
+
 module.exports = router;
